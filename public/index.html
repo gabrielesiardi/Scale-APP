@@ -1,44 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <title>Scale Dashboard</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <title>Visualizzazione Peso</title>
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <button id="adminLoginBtn" class="login-btn">Admin Login</button>
-
-  <div id="scaleContainer" class="scale-container">
-    <div class="scale-view" id="leftScale">
-      <div class="peso">Peso: <span id="leftWeight">--</span></div>
-      <div class="tara">Tara: <span id="leftTare">--</span></div>
-      <input type="text" id="leftSSCC" placeholder="Scan SSCC" />
-      <button class="submit-btn">Registra Peso</button>
-    </div>
-    <div class="scale-view hidden" id="rightScale">
-      <div class="peso">Peso: <span id="rightWeight">--</span></div>
-      <div class="tara">Tara: <span id="rightTare">--</span></div>
-      <input type="text" id="rightSSCC" placeholder="Scan SSCC" />
-      <button class="submit-btn">Registra Peso</button>
-    </div>
+  <div id="top-bar">
+    <button id="login-btn">Login</button>
+  </div>
+  <div id="main-display" class="single">
+    <!-- Weights will be loaded here by JS -->
   </div>
 
-  <!-- Admin Modal -->
-  <div id="adminPanel" class="admin-modal hidden">
-    <h2>Admin Login</h2>
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="login()">Login</button>
-
-    <div id="scaleSelection" class="hidden">
-      <h3>Select Scales</h3>
-      <label>Left Scale: <input type="text" id="leftScaleInput" /></label>
-      <label>Right Scale: <input type="text" id="rightScaleInput" /></label>
-      <button onclick="saveScales()">Save</button>
-      <button onclick="logout()">Logout</button>
-    </div>
-  </div>
-
-  <script src="main.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
