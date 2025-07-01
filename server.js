@@ -3,43 +3,27 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(express.static('public'));
-app.use(express.json());
-
-let config = {
+let sessionScales = {
   left: null,
   right: null
 };
 
-// Get selected scales (public endpoint)
-app.get('/api/config', (req, res) => {
-  res.json(config);
-});
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Save selected Raspberry/Scale combos (admin use)
-app.post('/api/config', (req, res) => {
+// Endpoint to save scale selections
+app.post('/api/set-scales', (req, res) => {
   const { left, right } = req.body;
-  config.left = left || null;
-  config.right = right || null;
-  console.log('Updated config:', config);
+  sessionScales.left = left;
+  sessionScales.right = right;
   res.sendStatus(200);
 });
 
-// Simple non-persistent login simulation
-app.post('/api/login', (req, res) => {
-  const { username, password } = req.body;
-  if (username === 'admin' && password === 'admin') {
-    res.json({ success: true });
-  } else {
-    res.json({ success: false });
-  }
-});
-
-// Serve main page
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
+// Endpoint to get current scale selections
+app.get('/api/get-scales', (req, res) => {
+  res.json(sessionScales);
 });
 
 app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+  console.log(`Server running at http://localhost:${port}`);
 });

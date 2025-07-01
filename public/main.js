@@ -1,60 +1,54 @@
 let isAdmin = false;
 
-document.getElementById('adminLoginBtn').onclick = () => {
-  document.getElementById('admin-modal').classList.remove('hidden');
-};
+document.getElementById("adminLoginBtn").addEventListener("click", () => {
+  document.getElementById("adminPanel").classList.remove("hidden");
+});
 
 function login() {
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
-
-  fetch('/api/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password })
-  }).then(res => res.json()).then(data => {
-    if (data.success) {
-      isAdmin = true;
-      document.getElementById('admin-modal').classList.add('hidden');
-      document.getElementById('config-panel').classList.remove('hidden');
-    } else {
-      alert('Invalid credentials');
-    }
-  });
+  const user = document.getElementById("username").value;
+  const pass = document.getElementById("password").value;
+  if (user === "admin" && pass === "password") {
+    isAdmin = true;
+    document.getElementById("scaleSelection").classList.remove("hidden");
+  } else {
+    alert("Invalid credentials");
+  }
 }
 
 function logout() {
   isAdmin = false;
-  document.getElementById('config-panel').classList.add('hidden');
+  document.getElementById("scaleSelection").classList.add("hidden");
+  document.getElementById("adminPanel").classList.add("hidden");
 }
 
-function saveConfig() {
-  const config = {
-    left: {
-      raspberry: document.getElementById('left-r').value,
-      scale: document.getElementById('left-s').value
-    },
-    right: {
-      raspberry: document.getElementById('right-r').value,
-      scale: document.getElementById('right-s').value
-    }
-  };
+async function saveScales() {
+  const left = document.getElementById("leftScaleInput").value;
+  const right = document.getElementById("rightScaleInput").value;
 
-  fetch('/api/config', {
+  await fetch('/api/set-scales', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(config)
-  }).then(() => {
-    document.getElementById('right-scale').style.display = config.right.raspberry && config.right.scale ? 'block' : 'none';
-    document.getElementById('config-panel').classList.add('hidden');
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ left, right })
   });
+
+  location.reload();
 }
 
-// Load existing config on startup
-fetch('/api/config')
-  .then(res => res.json())
-  .then(config => {
-    if (config.right) {
-      document.getElementById('right-scale').style.display = 'block';
-    }
-  });
+async function loadScales() {
+  const res = await fetch('/api/get-scales');
+  const config = await res.json();
+
+  if (config.left) {
+    document.getElementById("leftScale").classList.remove("hidden");
+    document.getElementById("leftWeight").innerText = "45.00";
+    document.getElementById("leftTare").innerText = "2.50";
+  }
+
+  if (config.right) {
+    document.getElementById("rightScale").classList.remove("hidden");
+    document.getElementById("rightWeight").innerText = "39.00";
+    document.getElementById("rightTare").innerText = "2.00";
+  }
+}
+
+loadScales();

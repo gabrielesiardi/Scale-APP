@@ -1,47 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Scale Weight Display</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Scale Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="top-bar">
-    <button id="adminLoginBtn">Admin Login</button>
-  </div>
+  <button id="adminLoginBtn" class="login-btn">Admin Login</button>
 
-  <div id="scale-container">
-    <div class="scale-display" id="left-scale">
-      <h1>Peso: <span id="left-weight">--</span></h1>
-      <p>Tara: <span id="left-tare">--</span></p>
-      <input type="text" placeholder="Scan SSCC" />
-      <button class="green-button">Registra Peso</button>
+  <div id="scaleContainer" class="scale-container">
+    <div class="scale-view" id="leftScale">
+      <div class="peso">Peso: <span id="leftWeight">--</span></div>
+      <div class="tara">Tara: <span id="leftTare">--</span></div>
+      <input type="text" id="leftSSCC" placeholder="Scan SSCC" />
+      <button class="submit-btn">Registra Peso</button>
     </div>
-
-    <div class="scale-display" id="right-scale" style="display: none;">
-      <h1>Peso: <span id="right-weight">--</span></h1>
-      <p>Tara: <span id="right-tare">--</span></p>
-      <input type="text" placeholder="Scan SSCC" />
-      <button class="green-button">Registra Peso</button>
+    <div class="scale-view hidden" id="rightScale">
+      <div class="peso">Peso: <span id="rightWeight">--</span></div>
+      <div class="tara">Tara: <span id="rightTare">--</span></div>
+      <input type="text" id="rightSSCC" placeholder="Scan SSCC" />
+      <button class="submit-btn">Registra Peso</button>
     </div>
   </div>
 
-  <div id="admin-modal" class="hidden">
+  <!-- Admin Modal -->
+  <div id="adminPanel" class="admin-modal hidden">
     <h2>Admin Login</h2>
-    <input id="username" placeholder="Username" />
-    <input id="password" placeholder="Password" type="password" />
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
     <button onclick="login()">Login</button>
-  </div>
 
-  <div id="config-panel" class="hidden">
-    <h3>Select Scales</h3>
-    <label>Left Raspberry</label><input id="left-r" />
-    <label>Scale</label><input id="left-s" /><br/>
-    <label>Right Raspberry</label><input id="right-r" />
-    <label>Scale</label><input id="right-s" /><br/>
-    <button onclick="saveConfig()">Save</button>
-    <button onclick="logout()">Logout</button>
+    <div id="scaleSelection" class="hidden">
+      <h3>Select Scales</h3>
+      <label>Left Scale: <input type="text" id="leftScaleInput" /></label>
+      <label>Right Scale: <input type="text" id="rightScaleInput" /></label>
+      <button onclick="saveScales()">Save</button>
+      <button onclick="logout()">Logout</button>
+    </div>
   </div>
 
   <script src="main.js"></script>
