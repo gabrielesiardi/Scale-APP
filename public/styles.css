@@ -1,57 +1,81 @@
 body {
-  font-family: Arial, sans-serif;
-  text-align: center;
   margin: 0;
-  background-color: #f4f4f4;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
 }
 
-.header {
+header {
   display: flex;
   justify-content: flex-end;
-  background: #eee;
-  padding: 10px;
-}
-
-.login-button {
-  text-decoration: none;
-  padding: 10px 20px;
-  background-color: #4285f4;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #0078d4;
   color: white;
-  border-radius: 5px;
 }
 
-.footer {
-  margin-top: 20px;
+header button {
+  background: white;
+  color: #0078d4;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-#register-btn {
-  font-size: 2em;
-  padding: 1em 2em;
-  background-color: green;
+main {
+  display: flex;
+  flex-direction: row;
+  height: calc(100vh - 60px);
+}
+
+.scale-container {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-right: 2px solid #ccc;
+}
+
+.scale-container:last-child {
+  border-right: none;
+}
+
+.weight {
+  font-size: 6vw;
+  font-weight: bold;
+  color: #222;
+}
+
+.tare {
+  font-size: 2vw;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+input[type="text"] {
+  font-size: 1.5vw;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  width: 80%;
+  text-align: center;
+}
+
+button.register-btn {
+  font-size: 2vw;
+  background-color: #28a745;
   color: white;
   border: none;
-  border-radius: 10px;
+  padding: 1rem 2rem;
+  margin-top: 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 60%;
 }
 
-.scale-box {
-  width: 48%;
-  display: inline-block;
-  background: white;
-  margin: 1%;
-  padding: 2%;
-  border-radius: 10px;
-}
-
-.scale-weight {
-  font-size: 5em;
-  font-weight: bold;
-}
-
-.scale-tare {
-  font-size: 1.5em;
-  color: #666;
-}
-
-.login-container {
-  margin-top: 100px;
+button.register-btn:hover {
+  background-color: #218838;
 }

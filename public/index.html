@@ -1,18 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Weight Display</title>
-  <link rel="stylesheet" href="style.css">
-  <script defer src="main.js"></script>
-</head>
-<body>
-  <div class="header">
-    <a href="/login" class="login-button">Login</a>
+<main>
+  <div id="left-scale" class="scale-container">
+    <div class="weight" id="left-weight">0.00 kg</div>
+    <div class="tare" id="left-tare">Tara: 0.00 kg</div>
+    <input type="text" id="left-sscc" placeholder="Inserisci SSCC" />
+    <button class="register-btn" onclick="submitWeight('left')">Registra Peso</button>
   </div>
-  <div id="scale-container"></div>
-  <div class="footer">
-    <button id="register-btn">Registra Peso</button>
+
+  <div id="right-scale" class="scale-container" style="display: none;">
+    <div class="weight" id="right-weight">0.00 kg</div>
+    <div class="tare" id="right-tare">Tara: 0.00 kg</div>
+    <input type="text" id="right-sscc" placeholder="Inserisci SSCC" />
+    <button class="register-btn" onclick="submitWeight('right')">Registra Peso</button>
   </div>
-</body>
-</html>
+</main>
