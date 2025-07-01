@@ -43,7 +43,11 @@ app.post('/api/logout', (req, res) => {
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
-
+app.get('/settings', (req, res) => {
+  const settingsPath = path.join(__dirname, 'public', 'settings.html');
+  console.log('Serving settings.html from:', settingsPath);
+  res.sendFile(settingsPath);
+});
 // Serve settings page (only for admin)
 app.get('/settings', (req, res) => {
   if (!req.session.isAdmin) return res.redirect('/');
