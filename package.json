@@ -1,7 +1,7 @@
 {
   "name": "scale-web-app",
   "version": "1.0.0",
-  "description": "Scale display web app with admin-configurable serial input",
+  "description": "Web app to read weight from scales with admin-configurable display",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

@@ -2,23 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Scale Display</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Weight Display</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="main.js"></script>
 </head>
 <body>
-  <div class="container">
-    <div id="left-scale" class="scale">
-      <div class="weight" id="weight-left">--</div>
-      <div class="tare" id="tare-left">Tara: --</div>
-      <button class="register" onclick="registerWeight('left')">Registra Peso</button>
-    </div>
-    <div id="right-scale" class="scale hidden">
-      <div class="weight" id="weight-right">--</div>
-      <div class="tare" id="tare-right">Tara: --</div>
-      <button class="register" onclick="registerWeight('right')">Registra Peso</button>
-    </div>
-    <button class="login-btn" onclick="showLogin()">Login</button>
+  <div class="header">
+    <a href="/login" class="login-button">Login</a>
   </div>
-  <script src="main.js"></script>
+  <div id="scale-container"></div>
+  <div class="footer">
+    <button id="register-btn">Registra Peso</button>
+  </div>
 </body>
 </html>

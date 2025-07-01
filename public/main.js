@@ -1,41 +1,32 @@
-function showLogin() {
-  const username = prompt("Username:");
-  const password = prompt("Password:");
+async function loadScales() {
+  const res = await fetch('/api/selected');
+  const scales = await res.json();
+  const container = document.getElementById('scale-container');
+  container.innerHTML = '';
 
-  fetch('/api/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password })
-  })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) window.location.href = "/settings";
-      else alert("Login fallito.");
-    });
-}
+  scales.forEach(scale => {
+    const scaleDiv = document.createElement('div');
+    scaleDiv.className = 'scale-box';
 
-function registerWeight(side) {
-  const weight = document.getElementById(`weight-${side}`).innerText;
-  const tare = document.getElementById(`tare-${side}`).innerText;
-  console.log(`Register: ${side}, ${weight}, ${tare}`);
-}
+    const weightDiv = document.createElement('div');
+    weightDiv.className = 'scale-weight';
+    weightDiv.innerText = 'Loading...';
 
-// Simulate real-time updates (you’ll replace this with actual logic)
-setInterval(() => {
-  document.getElementById('weight-left').innerText = Math.floor(Math.random() * 1000) + " kg";
-  document.getElementById('tare-left').innerText = "Tara: " + (Math.random() * 50).toFixed(1) + " kg";
+    const tareDiv = document.createElement('div');
+    tareDiv.className = 'scale-tare';
+    tareDiv.innerText = 'Tara: --';
 
-  if (!document.getElementById('right-scale').classList.contains("hidden")) {
-    document.getElementById('weight-right').innerText = Math.floor(Math.random() * 1000) + " kg";
-    document.getElementById('tare-right').innerText = "Tara: " + (Math.random() * 50).toFixed(1) + " kg";
-  }
-}, 2000);
-window.addEventListener("load", () => {
-  const selected = JSON.parse(sessionStorage.getItem("selectedScales")) || ["left"];
-  document.getElementById('left-scale').classList.add("hidden");
-  document.getElementById('right-scale').classList.add("hidden");
+    scaleDiv.appendChild(weightDiv);
+    scaleDiv.appendChild(tareDiv);
+    container.appendChild(scaleDiv);
 
-  selected.forEach(id => {
-    document.getElementById(`${id}-scale`).classList.remove("hidden");
+    setInterval(async () => {
+      const res = await fetch(`/api/weight/${scale}`);
+      const data = await res.json();
+      weightDiv.innerText = `Peso: ${data.weight} kg`;
+      tareDiv.innerText = `Tara: ${data.tare} kg`;
+    }, 2000);
   });
-});
+}
+
+window.onload = loadScales;
