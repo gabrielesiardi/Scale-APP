@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Scale Reader</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 2rem;
+      background-color: #f0f0f0;
+    }
+
+    h1 {
+      margin-bottom: 2rem;
+    }
+
+    #sscc {
+      font-size: 2rem;
+      padding: 0.75rem;
+      width: 80%;
+      max-width: 500px;
+      margin-bottom: 2rem;
+    }
+
+    .output {
+      margin: 2rem 0;
+    }
+
+    #weight {
+      font-size: 16vh;
+      font-weight: bold;
+      color: #333;
+      display: block;
+    }
+
+    #tare {
+      font-size: 4vh;
+      color: #666;
+      margin-top: -1rem;
+    }
+
+    button {
+      font-size: 5vh;
+      padding: 1rem 2rem;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 2rem;
+      width: 80%;
+      max-width: 400px;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <h1>Pesatura</h1>
+
+  <input type="text" id="sscc" placeholder="Scansiona codice SSCC" /><br>
+
+  <div class="output">
+    <span id="weight">--</span>
+    <div id="tare">Tara: -- kg</div>
+  </div>
+
+  <button onclick="submitData()">Registra Peso</button>
+
+  <script>
+    // Placeholder decoded values (simulate base64 parsing)
+    let decodedWeight = 42.5;
+    let decodedTare = 3.2;
+
+    // Update display
+    document.getElementById('weight').innerText = `Peso: ${decodedWeight} kg`;
+    document.getElementById('tare').innerText = `Tara: ${decodedTare} kg`;
+
+    function submitData() {
+      const sscc = document.getElementById('sscc').value;
+
+      fetch('/api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sscc,
+          weight: decodedWeight,
+          tare: decodedTare
+        })
+      })
+      .then(res => {
+        if (res.ok) {
+          alert("Peso registrato con successo!");
+        } else {
+          alert("Errore nella registrazione.");
+        }
+      });
+    }
+  </script>
+</body>
+</html>
