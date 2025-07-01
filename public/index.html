@@ -2,104 +2,52 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Scale Reader</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin: 0;
-      padding: 2rem;
-      background-color: #f0f0f0;
-    }
-
-    h1 {
-      margin-bottom: 2rem;
-    }
-
-    #sscc {
-      font-size: 2rem;
-      padding: 0.75rem;
-      width: 80%;
-      max-width: 500px;
-      margin-bottom: 2rem;
-    }
-
-    .output {
-      margin: 2rem 0;
-    }
-
-    #weight {
-      font-size: 16vh;
-      font-weight: bold;
-      color: #333;
-      display: block;
-    }
-
-    #tare {
-      font-size: 4vh;
-      color: #666;
-      margin-top: -1rem;
-    }
-
-    button {
-      font-size: 5vh;
-      padding: 1rem 2rem;
-      background-color: #28a745;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 2rem;
-      width: 80%;
-      max-width: 400px;
-    }
-
-    button:hover {
-      background-color: #218838;
-    }
-  </style>
+  <title>Scale Web App</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Pesatura</h1>
-
-  <input type="text" id="sscc" placeholder="Scansiona codice SSCC" /><br>
-
-  <div class="output">
-    <span id="weight">--</span>
-    <div id="tare">Tara: -- kg</div>
+  <div id="loginContainer" class="overlay hidden">
+    <form id="loginForm">
+      <h2>Admin Login</h2>
+      <input type="text" placeholder="Username" name="username" required />
+      <input type="password" placeholder="Password" name="password" required />
+      <button type="submit">Login</button>
+    </form>
   </div>
 
-  <button onclick="submitData()">Registra Peso</button>
+  <div id="scaleDisplay" class="split-screen">
+    <div class="scale half" id="leftScale">
+      <h1 class="weight" id="weightLeft">--</h1>
+      <h3 class="tare" id="tareLeft">Tara: --</h3>
+    </div>
+    <div class="scale half" id="rightScale">
+      <h1 class="weight" id="weightRight">--</h1>
+      <h3 class="tare" id="tareRight">Tara: --</h3>
+    </div>
+  </div>
 
-  <script>
-    // Placeholder decoded values (simulate base64 parsing)
-    let decodedWeight = 42.5;
-    let decodedTare = 3.2;
+  <div id="adminPanel" class="admin hidden">
+    <h3>Admin Panel</h3>
+    <form id="configForm">
+      <div>
+        <label>Left Raspberry</label>
+        <input name="leftRaspberry" />
+        <label>Scale</label>
+        <input name="leftScale" />
+      </div>
+      <div>
+        <label>Right Raspberry</label>
+        <input name="rightRaspberry" />
+        <label>Scale</label>
+        <input name="rightScale" />
+      </div>
+      <button type="submit">Save</button>
+    </form>
+    <button id="logout">Logout</button>
+  </div>
 
-    // Update display
-    document.getElementById('weight').innerText = `Peso: ${decodedWeight} kg`;
-    document.getElementById('tare').innerText = `Tara: ${decodedTare} kg`;
+  <button id="adminLoginBtn">Admin Login</button>
 
-    function submitData() {
-      const sscc = document.getElementById('sscc').value;
-
-      fetch('/api/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          sscc,
-          weight: decodedWeight,
-          tare: decodedTare
-        })
-      })
-      .then(res => {
-        if (res.ok) {
-          alert("Peso registrato con successo!");
-        } else {
-          alert("Errore nella registrazione.");
-        }
-      });
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
