@@ -1,54 +1,29 @@
-let isAdmin = false;
-
-document.getElementById("adminLoginBtn").addEventListener("click", () => {
-  document.getElementById("adminPanel").classList.remove("hidden");
-});
-
-function login() {
-  const user = document.getElementById("username").value;
-  const pass = document.getElementById("password").value;
-  if (user === "admin" && pass === "password") {
-    isAdmin = true;
-    document.getElementById("scaleSelection").classList.remove("hidden");
-  } else {
-    alert("Invalid credentials");
-  }
-}
-
-function logout() {
-  isAdmin = false;
-  document.getElementById("scaleSelection").classList.add("hidden");
-  document.getElementById("adminPanel").classList.add("hidden");
-}
-
-async function saveScales() {
-  const left = document.getElementById("leftScaleInput").value;
-  const right = document.getElementById("rightScaleInput").value;
-
-  await fetch('/api/set-scales', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({ left, right })
-  });
-
-  location.reload();
-}
-
-async function loadScales() {
+async function fetchWeights() {
   const res = await fetch('/api/get-scales');
-  const config = await res.json();
+  const selectedScales = await res.json();
 
-  if (config.left) {
-    document.getElementById("leftScale").classList.remove("hidden");
-    document.getElementById("leftWeight").innerText = "45.00";
-    document.getElementById("leftTare").innerText = "2.50";
-  }
+  const container = document.getElementById('main-display');
+  container.innerHTML = '';
+  container.className = selectedScales.length === 2 ? 'split' : 'single';
 
-  if (config.right) {
-    document.getElementById("rightScale").classList.remove("hidden");
-    document.getElementById("rightWeight").innerText = "39.00";
-    document.getElementById("rightTare").innerText = "2.00";
-  }
+  selectedScales.forEach(async (scaleId) => {
+    const data = await fetch(`/api/weight/${scaleId}`);
+    const { weight, tare } = await data.json();
+
+    const box = document.createElement('div');
+    box.classList.add('scale-box');
+
+    box.innerHTML = `
+      <div class="weight">${weight} kg</div>
+      <div class="tare">Tara: ${tare} kg</div>
+      <button class="register-btn">Registra Peso</button>
+    `;
+
+    container.appendChild(box);
+  });
 }
 
-loadScales();
+
+
+setInterval(fetchWeights, 2000);
+fetchWeights();

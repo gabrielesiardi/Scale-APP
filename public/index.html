@@ -12,6 +12,21 @@
   <div id="main-display" class="single">
     <!-- Weights will be loaded here by JS -->
   </div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const loginBtn = document.getElementById('login-btn');
+    if (loginBtn) {
+      loginBtn.addEventListener('click', () => {
+        window.location.href = '/login';
+      });
+    }
+
+    // Call weight update loop
+    fetchWeights();
+    setInterval(fetchWeights, 2000);
+  });
+</script>
+<script src="js/main.js"></script>
 
   <script src="js/main.js"></script>
 </body>
