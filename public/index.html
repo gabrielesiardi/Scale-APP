@@ -1,28 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Scale Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Scale Display</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="top-bar">
-    <button id="login-btn">Login</button>
-  </div>
-  <div id="scale-container">
-    <div class="scale" id="scale1">
-      <div class="weight">Peso: <span id="weight1">0</span> kg</div>
-      <div class="tare">Tara: <span id="tare1">0</span> kg</div>
-      <button class="register-btn">Registra Peso</button>
+  <div class="container">
+    <div id="left-scale" class="scale">
+      <div class="weight" id="weight-left">--</div>
+      <div class="tare" id="tare-left">Tara: --</div>
+      <button class="register" onclick="registerWeight('left')">Registra Peso</button>
     </div>
-    <div class="scale" id="scale2" style="display: none;">
-      <div class="weight">Peso: <span id="weight2">0</span> kg</div>
-      <div class="tare">Tara: <span id="tare2">0</span> kg</div>
-      <button class="register-btn">Registra Peso</button>
+    <div id="right-scale" class="scale hidden">
+      <div class="weight" id="weight-right">--</div>
+      <div class="tare" id="tare-right">Tara: --</div>
+      <button class="register" onclick="registerWeight('right')">Registra Peso</button>
     </div>
+    <button class="login-btn" onclick="showLogin()">Login</button>
   </div>
-
   <script src="main.js"></script>
 </body>
 </html>

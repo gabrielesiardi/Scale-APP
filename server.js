@@ -1,62 +1,53 @@
-const express = require("express");
-const session = require("express-session");
-const path = require("path");
-const bodyParser = require("body-parser");
-
+const express = require('express');
+const path = require('path');
+const session = require('express-session');
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(express.static(path.join(__dirname, "public")));
-app.use(bodyParser.json());
+// Middleware
+app.use(express.static('public'));
+app.use(express.json());
+app.use(session({
+  secret: 'my-secret',
+  resave: false,
+  saveUninitialized: true
+}));
 
-app.use(
-  session({
-    secret: "secureScaleSessionKey",
-    resave: false,
-    saveUninitialized: true
-  })
-);
+// Fake credentials (you can enhance this)
+const ADMIN_USER = 'admin';
+const ADMIN_PASS = 'password';
 
-// Serve index
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+// API: Get weight data (for future use)
+app.get('/api/weight', (req, res) => {
+  res.json({ weight: 1234, tare: 150 });
 });
 
-// Serve settings if logged in
-app.get("/settings", (req, res) => {
-  if (req.session.isAuthenticated) {
-    res.sendFile(path.join(__dirname, "public", "settings.html"));
-  } else {
-    res.redirect("/");
-  }
-});
-
-// Login (POST)
-app.post("/login", (req, res) => {
+// POST login
+app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
-  if (username === "admin" && password === "admin") {
-    req.session.isAuthenticated = true;
-    res.json({ success: true });
-  } else {
-    res.json({ success: false });
+  if (username === ADMIN_USER && password === ADMIN_PASS) {
+    req.session.isAdmin = true;
+    return res.json({ success: true });
   }
+  return res.status(401).json({ success: false });
 });
 
-// Logout
-app.post("/logout", (req, res) => {
-  req.session.destroy();
-  res.json({ success: true });
+// POST logout
+app.post('/api/logout', (req, res) => {
+  req.session.destroy(() => {
+    res.redirect('/');
+  });
 });
 
-// API: Save selected scales
-app.post("/set-scales", (req, res) => {
-  req.session.selectedScales = req.body.scales;
-  res.json({ success: true });
+// Serve index.html (main UI)
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// API: Get selected scales
-app.get("/get-scales", (req, res) => {
-  res.json({ scales: req.session.selectedScales || [] });
+// Serve settings page (only for admin)
+app.get('/settings', (req, res) => {
+  if (!req.session.isAdmin) return res.redirect('/');
+  res.sendFile(path.join(__dirname, 'public', 'settings.html'));
 });
 
 app.listen(port, () => {
