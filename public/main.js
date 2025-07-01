@@ -1,54 +1,39 @@
-let isAdmin = false;
+document.addEventListener("DOMContentLoaded", async () => {
+  const loginBtn = document.getElementById("login-btn");
 
-document.getElementById("adminLoginBtn").addEventListener("click", () => {
-  document.getElementById("adminPanel").classList.remove("hidden");
-});
-
-function login() {
-  const user = document.getElementById("username").value;
-  const pass = document.getElementById("password").value;
-  if (user === "admin" && pass === "password") {
-    isAdmin = true;
-    document.getElementById("scaleSelection").classList.remove("hidden");
-  } else {
-    alert("Invalid credentials");
-  }
-}
-
-function logout() {
-  isAdmin = false;
-  document.getElementById("scaleSelection").classList.add("hidden");
-  document.getElementById("adminPanel").classList.add("hidden");
-}
-
-async function saveScales() {
-  const left = document.getElementById("leftScaleInput").value;
-  const right = document.getElementById("rightScaleInput").value;
-
-  await fetch('/api/set-scales', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({ left, right })
+  loginBtn.addEventListener("click", () => {
+    const username = prompt("Username:");
+    const password = prompt("Password:");
+    fetch("/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) window.location.href = "/settings";
+      else alert("Credenziali errate.");
+    });
   });
 
-  location.reload();
-}
+  const scales = await fetch("/get-scales").then(r => r.json());
+  if (!scales || !scales.scales) return;
 
-async function loadScales() {
-  const res = await fetch('/api/get-scales');
-  const config = await res.json();
-
-  if (config.left) {
-    document.getElementById("leftScale").classList.remove("hidden");
-    document.getElementById("leftWeight").innerText = "45.00";
-    document.getElementById("leftTare").innerText = "2.50";
+  if (scales.scales.includes("scale1")) {
+    document.getElementById("scale1").style.display = "block";
+  } else {
+    document.getElementById("scale1").style.display = "none";
   }
 
-  if (config.right) {
-    document.getElementById("rightScale").classList.remove("hidden");
-    document.getElementById("rightWeight").innerText = "39.00";
-    document.getElementById("rightTare").innerText = "2.00";
+  if (scales.scales.includes("scale2")) {
+    document.getElementById("scale2").style.display = "block";
+  } else {
+    document.getElementById("scale2").style.display = "none";
   }
-}
 
-loadScales();
+  if (scales.scales.length === 2) {
+    document.getElementById("scale-container").style.flexDirection = "row";
+  } else {
+    document.getElementById("scale-container").style.flexDirection = "column";
+  }
+});

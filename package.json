@@ -1,7 +1,7 @@
 {
   "name": "scale-web-app",
   "version": "1.0.0",
-  "description": "Web app to display scale weight with admin-configured Raspberry selection",
+  "description": "Scale display web app with admin-configurable serial input",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

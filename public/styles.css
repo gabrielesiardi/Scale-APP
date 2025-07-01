@@ -1,62 +1,59 @@
 body {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-}
-
-.login-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 6px 12px;
-}
-
-.scale-container {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 80px;
-}
-
-.scale-view {
-  width: 45%;
-  border: 1px solid #ccc;
-  padding: 20px;
+  font-family: sans-serif;
   text-align: center;
+  margin: 0;
+  background-color: #f8f8f8;
 }
 
-.peso {
-  font-size: 6vw;
+#top-bar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  background-color: #0078D7;
+}
+
+#login-btn {
+  background-color: #ffffff;
+  color: #0078D7;
   font-weight: bold;
-  margin-bottom: 10px;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
 }
 
-.tara {
+#scale-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 40px;
+}
+
+.scale {
+  flex: 1;
+  margin: 20px;
+  border: 2px solid #ccc;
+  padding: 20px;
+  background-color: white;
+}
+
+.weight {
+  font-size: 5vw;
+  font-weight: bold;
+}
+
+.tare {
   font-size: 2vw;
-  margin-bottom: 20px;
+  color: #555;
+  margin-top: 10px;
 }
 
-input[type="text"] {
-  font-size: 1.5vw;
-  padding: 8px;
-  width: 60%;
-  margin-bottom: 10px;
-}
-
-.submit-btn {
+.register-btn {
+  margin-top: 20px;
+  font-size: 2vw;
+  padding: 15px;
   background-color: green;
   color: white;
-  font-size: 2vw;
-  padding: 10px 20px;
-}
-
-.admin-modal {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  background-color: #eee;
-  padding: 20px;
-  border: 2px solid #ccc;
-}
-
-.hidden {
-  display: none;
+  border: none;
+  width: 100%;
+  cursor: pointer;
 }

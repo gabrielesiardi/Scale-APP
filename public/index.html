@@ -1,33 +1,28 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Visualizzazione Peso</title>
-  <link rel="stylesheet" href="css/styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Scale Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div id="top-bar">
     <button id="login-btn">Login</button>
   </div>
-  <div id="main-display" class="single">
-    <!-- Weights will be loaded here by JS -->
+  <div id="scale-container">
+    <div class="scale" id="scale1">
+      <div class="weight">Peso: <span id="weight1">0</span> kg</div>
+      <div class="tare">Tara: <span id="tare1">0</span> kg</div>
+      <button class="register-btn">Registra Peso</button>
+    </div>
+    <div class="scale" id="scale2" style="display: none;">
+      <div class="weight">Peso: <span id="weight2">0</span> kg</div>
+      <div class="tare">Tara: <span id="tare2">0</span> kg</div>
+      <button class="register-btn">Registra Peso</button>
+    </div>
   </div>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const loginBtn = document.getElementById('login-btn');
-    if (loginBtn) {
-      loginBtn.addEventListener('click', () => {
-        window.location.href = '/login';
-      });
-    }
 
-    // Call weight update loop
-    fetchWeights();
-    setInterval(fetchWeights, 2000);
-  });
-</script>
-<script src="js/main.js"></script>
-
-  <script src="js/main.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
